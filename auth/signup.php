@@ -1,10 +1,10 @@
 <?php
 include"../connect.php";
 $username=filterRequest('username');
-$password=sha1('password');
+$password=sha1(filterRequest('password'));
 $email=filterRequest('email');
 $phone=filterRequest('phone');
-$verifycode=0;
+$verifycode=rand(10000,99999);
 $stmt=$con->prepare("SELECT * FROM `users` WHERE  `users_email`=? OR `users_phone`=?");
 $stmt->execute(array($email,$phone));
 $count=$stmt->rowCount();
@@ -16,9 +16,10 @@ if($count>0){
             "users_password"=>$password,
             "users_email"=>$email,
             "users_phone"=>$phone,
-            "users_verifycode"=>0,
+            "users_verifycode"=>$verifycode,
             
         );
+        // sendEmail($email,"Verfiy Code Ecommerce","Verfiy code $verifycode");
         insertData("users",$data);
     }
 
