@@ -3,10 +3,10 @@ include"../connect.php";
 $categoriesId=filterRequest("id");
 $userid=filterRequest("userid");
 // getAllData("itemsview","`categories_id` =$categoriesId");
-$stmt=$con->prepare("SELECT itemsview.*,1 as favorite FROM itemsview
+$stmt=$con->prepare("SELECT itemsview.*,1 as favorite , items_price - (items_price * (items_discount/100)) as itemspricediscount FROM itemsview
 INNER JOIN favorite on itemsview.items_id=favorite.favorite_itemsid and favorite.favorite_usersid=$userid and `categories_id` =$categoriesId
 UNION All 
-SELECT itemsview.*,0 as favorite FROM itemsview WHERE `categories_id` =$categoriesId and itemsview.items_id NOT IN(SELECT itemsview.items_id FROM itemsview
+SELECT itemsview.*,0 as favorite , items_price - (items_price * (items_discount/100)) as itemspricediscount FROM itemsview WHERE `categories_id` =$categoriesId and itemsview.items_id NOT IN(SELECT itemsview.items_id FROM itemsview
 INNER JOIN favorite on itemsview.items_id=favorite.favorite_itemsid and favorite.favorite_usersid=$userid )");
 $stmt->execute();
 $count=$stmt->rowCount();
