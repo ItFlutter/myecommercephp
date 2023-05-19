@@ -2,7 +2,7 @@
 include "../connect.php";
 $usersid=filterRequest('usersid');
 $itemsid=filterRequest('itemsid');
-$stmt=$con->prepare("SELECT COUNT(cart_id) as countitems FROM cart WHERE cart_itemsid=$itemsid AND cart_usersid =$usersid");
+$stmt=$con->prepare("SELECT COUNT(cart_id) as countitems FROM cart WHERE cart_itemsid=$itemsid AND cart_usersid =$usersid AND cart_ordres=0");
 $stmt->execute();
 $count=$stmt->rowCount();
 $data=$stmt->fetchColumn();
