@@ -22,6 +22,7 @@ create or replace view ordersview as
 select orders.*,address.* from orders 
 left join address on orders.orders_address=address.address_id;
 
+
 -- =============================combined=========================
 -- create or replace view ordersview1 as
 -- select orders.*,address.* from orders,address
@@ -33,3 +34,12 @@ select count(cart.cart_itemsid) as countitems,sum(items.items_price-items.items_
 inner join items on cart.cart_itemsid=items.items_id
 where cart_ordres!=0
 group by cart.cart_ordres ,cart.cart_itemsid,cart.cart_usersid; 
+
+
+
+create or replace view itemstopselling as
+select count(cart.cart_id) as countitems,cart.*,items.* from cart
+inner join items on items.items_id=cart.cart_itemsid
+where cart_ordres!=0
+group by cart_itemsid 
+order by countitems desc
