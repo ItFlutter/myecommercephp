@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW itemsview AS
-SELECT items.*,categories.* FROM items
+SELECT items.*,categories.*,items.items_price - (items.items_price * (items.items_discount/100)) as itemspricediscount FROM items
 INNER JOIN categories ON items.items_cat=categories.categories_id;
 
 
@@ -38,8 +38,9 @@ group by cart.cart_ordres ,cart.cart_itemsid,cart.cart_usersid;
 
 
 create or replace view itemstopselling as
-select count(cart.cart_id) as countitems,cart.*,items.* from cart
+select count(cart.cart_id) as countitems,cart.*,items.*,categories.*,items.items_price-(items.items_price*(items.items_discount/100)) as itemspricediscount from cart
 inner join items on items.items_id=cart.cart_itemsid
+inner join categories on items.items_cat=categories.categories_id
 where cart_ordres!=0
 group by cart_itemsid 
 order by countitems desc

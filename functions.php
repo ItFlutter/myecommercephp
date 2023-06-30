@@ -260,10 +260,10 @@ function sendGCM($title, $message, $topic, $pageid, $pagename)
     return $result;
     curl_close($ch);
 }
-function insertNotify($title,$body,$userid,$topic,$pageid,$pagename){
+function insertNotify($title,$body,$userid,$topic,$pageid,$pagename,$orderid){
     global $con;
-    $stmt=$con->prepare("insert into `notification` (notification_title,notification_body,notification_userid) values (?,?,?)");
-    $stmt->execute(array($title,$body,$userid));
+    $stmt=$con->prepare("insert into `notification` (notification_title,notification_body,notification_userid,notification_orderid) values (?,?,?,?)");
+    $stmt->execute(array($title,$body,$userid,$orderid));
     sendGCM($title,$body,$topic,$pageid,$pagename);
     $count=$stmt->rowCount();
     return $count;

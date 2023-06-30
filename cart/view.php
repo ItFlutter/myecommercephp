@@ -2,7 +2,7 @@
 include"../connect.php";
 $usersid=filterRequest("usersid");
 $data=getAllData("cartview","cart_usersid=$usersid",null,false);
-$stmt=$con->prepare("SELECT SUM(cartview.itemsprice) as totalprice,SUM(cartview.countitems) as totalcount FROM cartview
+$stmt=$con->prepare("SELECT SUM(cartview.itemstotalprice) as totalprice,SUM(cartview.countitems) as totalcount FROM cartview
 WHERE cartview.cart_usersid=$usersid
 GROUP BY cartview.cart_usersid");
 $stmt->execute();
