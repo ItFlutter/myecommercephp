@@ -18,9 +18,9 @@ function getAllDataFavoriteTheNewest()
     $data = array();
     $userid=filterRequest("userid");
         $stmt = $con->prepare("SELECT itemsview.*,1 as favorite, items_price - (items_price * (items_discount/100)) as itemspricediscount FROM itemsview
-        INNER JOIN favorite on itemsview.items_id=favorite.favorite_itemsid and favorite.favorite_usersid=$userid
+        INNER JOIN favorite on itemsview.items_id=favorite.favorite_itemsid and favorite.favorite_usersid=$userid WHERE itemsview.items_active='1'
         UNION All 
-        SELECT itemsview.*,0 as favorite , items_price - (items_price * (items_discount/100)) as itemspricediscount FROM itemsview WHERE itemsview.items_id NOT IN(SELECT itemsview.items_id FROM itemsview
+        SELECT itemsview.*,0 as favorite , items_price - (items_price * (items_discount/100)) as itemspricediscount FROM itemsview WHERE  itemsview.items_active='1' and itemsview.items_id NOT IN(SELECT itemsview.items_id FROM itemsview
         INNER JOIN favorite on itemsview.items_id=favorite.favorite_itemsid and favorite.favorite_usersid=$userid) order by items_date ASC");
     $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -38,9 +38,9 @@ function getAllDataFavoriteTopSelling()
     $data = array();
     $userid=filterRequest("userid");
         $stmt = $con->prepare("SELECT itemstopselling.*,1 as favorite FROM itemstopselling
-        INNER JOIN favorite on itemstopselling.items_id=favorite.favorite_itemsid and favorite.favorite_usersid=$userid
+        INNER JOIN favorite on itemstopselling.items_id=favorite.favorite_itemsid and favorite.favorite_usersid=$userid WHERE itemstopselling.items_active='1'
         UNION All 
-        SELECT itemstopselling.*,0 as favorite FROM itemstopselling WHERE itemstopselling.items_id NOT IN(SELECT itemstopselling.items_id FROM itemstopselling
+        SELECT itemstopselling.*,0 as favorite FROM itemstopselling WHERE  itemstopselling.items_active='1' and itemstopselling.items_id NOT IN(SELECT itemstopselling.items_id FROM itemstopselling
         INNER JOIN favorite on itemstopselling.items_id=favorite.favorite_itemsid and favorite.favorite_usersid=$userid) order by countitems desc");
     $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);

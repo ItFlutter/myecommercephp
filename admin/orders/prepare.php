@@ -21,7 +21,7 @@ if($count>0){
     insertNotify("Success","Order With The ID $ordersid Has Been Prepared And Will Be Sending",$usersid,"users$usersid","none","refreshorderpending",$ordersid);
 
     }else{
-    insertNotify("Success","Order With The ID $ordersid Has Been Prepared",$usersid,"users$usersid","none","refreshorderpending",$ordersid);
+    insertNotify("Success","Order With The ID $ordersid Has Been Prepared And Ready To Recieve",$usersid,"users$usersid","none","refreshorderpending",$ordersid);
 
     }
 }

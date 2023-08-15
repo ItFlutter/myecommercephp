@@ -4,9 +4,9 @@ include"connect.php";
 $userid=filterRequest("userid");
 
 $stmt=$con->prepare("SELECT itemsview.*,1 as favorite , items_price - (items_price * (items_discount/100)) as itemspricediscount FROM itemsview
-INNER JOIN favorite on itemsview.items_id=favorite.favorite_itemsid and favorite.favorite_usersid=$userid where itemsview.items_discount!=0
+INNER JOIN favorite on itemsview.items_id=favorite.favorite_itemsid and favorite.favorite_usersid=$userid where itemsview.items_discount!=0 and itemsview.items_active='1'
 UNION All 
-SELECT itemsview.*,0 as favorite , items_price - (items_price * (items_discount/100)) as itemspricediscount FROM itemsview WHERE itemsview.items_discount!=0 and itemsview.items_id NOT IN(SELECT itemsview.items_id FROM itemsview
+SELECT itemsview.*,0 as favorite , items_price - (items_price * (items_discount/100)) as itemspricediscount FROM itemsview WHERE  itemsview.items_active='1' and itemsview.items_discount!=0 and itemsview.items_id NOT IN(SELECT itemsview.items_id FROM itemsview
 INNER JOIN favorite on itemsview.items_id=favorite.favorite_itemsid and favorite.favorite_usersid=$userid and itemsview.items_discount!=0)");
 $stmt->execute();
 $count=$stmt->rowCount();

@@ -15,7 +15,7 @@ try {
 
     
     include "functions.php";
-    // checkAuthenticate();
+    checkAuthenticate();
 
 }catch(PDOException $e){
   echo $e->getMessage() ;        

@@ -1,4 +1,5 @@
 <?php
+// date_default_timezone_set("Asia/Damascus");
 define("MB", 1048576);
 
 function filterRequest($requestname)
@@ -155,7 +156,7 @@ function imageUpload($dir,$imageRequest)
     $imagename  = rand(1000, 10000) . $_FILES[$imageRequest]['name'];
     $imagetmp   = $_FILES[$imageRequest]['tmp_name'];
     $imagesize  = $_FILES[$imageRequest]['size'];
-    $allowExt   = array("jpg", "png", "gif", "mp3", "pdf");
+    $allowExt   = array("jpg", "png", "gif", "mp3", "pdf","svg");
     $strToArray = explode(".", $imagename);
     $ext        = end($strToArray);
     $ext        = strtolower($ext);
@@ -163,7 +164,7 @@ function imageUpload($dir,$imageRequest)
     if (!empty($imagename) && !in_array($ext, $allowExt)) {
       $msgError = "EXT";
     }
-    if ($imagesize > 2 * MB) {
+    if ($imagesize > 5 * MB) {
       $msgError = "size";
     }
     if (empty($msgError)) {
@@ -182,13 +183,15 @@ function deleteFile($dir, $imagename)
 {
     if (file_exists($dir . "/" . $imagename)) {
         unlink($dir . "/" . $imagename);
+        return true;
     }
+    return false;
 }
 
 function checkAuthenticate()
 {
     if (isset($_SERVER['PHP_AUTH_USER'])  && isset($_SERVER['PHP_AUTH_PW'])) {
-        if ($_SERVER['PHP_AUTH_USER'] != "wael" ||  $_SERVER['PHP_AUTH_PW'] != "wael12345") {
+        if ($_SERVER['PHP_AUTH_USER'] != "ahmad" ||  $_SERVER['PHP_AUTH_PW'] != "ahmad12345") {
             header('WWW-Authenticate: Basic realm="My Realm"');
             header('HTTP/1.0 401 Unauthorized');
             echo 'Page Not Found';

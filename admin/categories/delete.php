@@ -2,6 +2,11 @@
 include"../../connect.php";
 $id=filterRequest("id");
 $imagename=filterRequest("imagename");
-deleteFile("../../upload/categories", $imagename);
-deleteData("categories","categories_id=$id");
+$status=deleteFile("../../upload/categories", $imagename);
+if($status==true){
+
+    deleteData("categories","categories_id=$id");
+}else{
+    echo json_encode(array("status" => "failure"));  
+}
 ?>

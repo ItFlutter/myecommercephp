@@ -1,3 +1,7 @@
 <?php
-echo "12345"."54321";
+// include"connect.php";
+function test(){
+    echo "ahmad";
+}
+test()
 ?>
