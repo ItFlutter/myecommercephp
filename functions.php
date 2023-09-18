@@ -1,5 +1,5 @@
 <?php
-// date_default_timezone_set("Asia/Damascus");
+date_default_timezone_set("Asia/Damascus");
 define("MB", 1048576);
 
 function filterRequest($requestname)

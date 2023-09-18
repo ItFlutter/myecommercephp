@@ -35,6 +35,8 @@ $data=array(
 );
 $count=insertData("orders",$data,$json=false);
 if($count > 0){
+    sendGCM("Warning","A Order Has Been Received From The User $usersid","sevices","none","ordershomepending");
+
     $stmt=$con->prepare("SELECT Max(orders_id) from orders");
     $stmt->execute();
     $maxid=$stmt->fetchColumn();

@@ -41,6 +41,9 @@ if($res=="empty"){
         "items_cat"=>$catid,
     );
 }
+$count1=updateData($table,$data,"items_id=$id");
+if($count1>0){
+    sendGCM("Warning Item","The Item $id Has Been Hidden","users","none","itemrefresh");
 
-updateData($table,$data,"items_id=$id");
+}
 ?>
